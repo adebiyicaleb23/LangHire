@@ -164,10 +164,36 @@ async def credential_refresh_loop(interval_minutes: int = 14):
         refresh_credentials()
 
 
-def get_llm() -> ChatAWSBedrock:
-    """Create a fresh LLM client with current credentials."""
-    session = boto3.Session(profile_name=AWS_PROFILE, region_name=AWS_REGION)
-    return ChatAWSBedrock(model=MODEL_ID, session=session)
+def get_llm():
+    """Create an LLM client supporting Google Gemini, OpenAI, Anthropic, or AWS Bedrock."""
+    import os
+    gemini_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GEMINI_API_ACCESS") or os.environ.get("GEMINI_API_NAME")
+    if gemini_key:
+        try:
+            from langchain_google_genai import ChatGoogleGenerativeAI
+            model_name = os.environ.get("LLM_MODEL", "gemini-2.0-flash")
+            return ChatGoogleGenerativeAI(model=model_name, google_api_key=gemini_key, temperature=0.1)
+        except Exception as e:
+            print(f"Notice: Gemini init: {e}")
+
+    openai_key = os.environ.get("OPENAI_API_KEY")
+    if openai_key:
+        from langchain_openai import ChatOpenAI
+        return ChatOpenAI(model=os.environ.get("LLM_MODEL", "gpt-4o"), api_key=openai_key)
+
+    anthropic_key = os.environ.get("ANTHROPIC_API_KEY")
+    if anthropic_key:
+        from langchain_anthropic import ChatAnthropic
+        return ChatAnthropic(model=os.environ.get("LLM_MODEL", "claude-3-5-sonnet-latest"), api_key=anthropic_key)
+
+    try:
+        session = boto3.Session(profile_name=AWS_PROFILE, region_name=AWS_REGION)
+        return ChatAWSBedrock(model=MODEL_ID, session=session)
+    except Exception:
+        if gemini_key:
+            from langchain_google_genai import ChatGoogleGenerativeAI
+            return ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=gemini_key)
+        raise
 
 
 def normalize_question(q: str) -> str:

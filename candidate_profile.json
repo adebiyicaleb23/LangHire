@@ -1,0 +1,70 @@
+{
+  "name": "Iyanuoluwa Adebiyi",
+  "email": "adebiyicaleb222@gmail.com",
+  "phone": "+2347050301256",
+  "phone_country_code": "+234",
+  "address": {
+    "city": "Abuja",
+    "state": "FCT",
+    "zip": "900001",
+    "country": "Nigeria"
+  },
+  "work_authorization": "Authorized for Remote / Contractor roles worldwide",
+  "visa_sponsorship_needed": "No",
+  "willing_to_relocate": "No",
+  "preferred_work_mode": "Remote",
+  "years_of_experience": "5",
+  "education": {
+    "degree": "M.Sc. in Computer Applications",
+    "school": "University of Suffolk, United Kingdom",
+    "graduation": "2025"
+  },
+  "current_role": "AI Data Evaluator & Domain Specialist",
+  "target_job_titles": [
+    "AI Trainer",
+    "AI Data Evaluator",
+    "RLHF Specialist",
+    "Data Annotation Specialist",
+    "Prompt Engineer",
+    "Model Evaluation Specialist",
+    "Virtual Assistant",
+    "Administrative Assistant",
+    "Customer Support Specialist",
+    "Graphic Designer",
+    "Video Editor"
+  ],
+  "target_locations": [
+    "Remote",
+    "Worldwide",
+    "United States (Remote)",
+    "United Kingdom (Remote)"
+  ],
+  "languages": [
+    "English (Fluent / Professional)"
+  ],
+  "skills": [
+    "AI Model Training",
+    "RLHF Alignment",
+    "Supervised Fine-Tuning (SFT)",
+    "Prompt Engineering",
+    "Preference Ranking",
+    "Hallucination Detection",
+    "Data Annotation",
+    "Red-Teaming",
+    "Python",
+    "Virtual Assistance",
+    "Customer Support",
+    "Graphic Design",
+    "Video Editing"
+  ],
+  "salary_expectation": {
+    "currency": "USD",
+    "min": 30,
+    "max": 65,
+    "period": "hourly"
+  },
+  "date_format": "MM/DD/YYYY",
+  "notice_period": "Immediate",
+  "nationality": "Nigerian",
+  "notes": "Available immediately for remote full-time or contract positions worldwide."
+}

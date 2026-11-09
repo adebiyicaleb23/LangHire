@@ -1,0 +1,10 @@
+{
+  "sensitive_data": {
+    "email": "adebiyicaleb222@gmail.com",
+    "password": ""
+  },
+  "resume_path": "resume.txt",
+  "blocked_domains": [
+    "meeboss.com"
+  ]
+}

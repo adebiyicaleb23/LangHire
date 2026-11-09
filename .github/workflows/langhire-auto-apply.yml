@@ -1,0 +1,114 @@
+name: LangHire Auto-Applier
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 13 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  langhire-run:
+    name: LangHire Job Discovery & Auto-Apply
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_API_ACCESS: ${{ secrets.GEMINI_API_ACCESS }}
+      GEMINI_API_NAME: ${{ secrets.GEMINI_API_NAME }}
+      MY_EMAIL: ${{ secrets.MY_EMAIL }}
+      LLM_MODEL: gemini-2.0-flash
+      PYTHONUNBUFFERED: "1"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r backend/requirements.txt
+          pip install langchain-google-genai
+          playwright install --with-deps chromium
+
+      - name: Prepare Candidate Profile & Data Directory
+        run: |
+          # Create OS data dir for Linux (XDG data home: ~/.local/share/LangHire)
+          DATA_DIR="$HOME/.local/share/LangHire"
+          mkdir -p "$DATA_DIR"
+          mkdir -p logs resumes
+
+          # Copy candidate profile, settings, and resume to both root and data dir
+          cp candidate_profile.json "$DATA_DIR/candidate_profile.json"
+          cp settings.json "$DATA_DIR/settings.json"
+          cp resume.txt "$DATA_DIR/resume.txt" 2>/dev/null || true
+
+          # If email secret provided, ensure it matches in profile and settings
+          if [ -n "$MY_EMAIL" ]; then
+            python -c "
+            import json, os
+            email = os.environ['MY_EMAIL']
+            for path in ['$DATA_DIR/candidate_profile.json', 'candidate_profile.json']:
+                if os.path.exists(path):
+                    with open(path, 'r') as f:
+                        d = json.load(f)
+                    d['email'] = email
+                    with open(path, 'w') as f:
+                        json.dump(d, f, indent=2)
+            for path in ['$DATA_DIR/settings.json', 'settings.json']:
+                if os.path.exists(path):
+                    with open(path, 'r') as f:
+                        d = json.load(f)
+                    d['sensitive_data']['email'] = email
+                    with open(path, 'w') as f:
+                        json.dump(d, f, indent=2)
+            "
+          fi
+          echo "Candidate profile & settings ready."
+
+      - name: Run Job Collection & Auto-Applier
+        run: |
+          echo "=================================================="
+          echo "Starting LangHire Auto-Applier with Gemini AI..."
+          echo "=================================================="
+
+          # Collect jobs across priority titles (AI Trainer, AI Data Evaluator, RLHF, VA)
+          python cli/collect_jobs.py --title "AI Trainer" || true
+          python cli/collect_jobs.py --title "AI Data Evaluator" || true
+
+          # Auto-apply to collected jobs
+          python cli/apply_jobs.py --workers 2 || true
+
+      - name: Upload LangHire Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: langhire-results-${{ github.run_id }}
+          path: |
+            logs/
+            resumes/
+            jobs.json
+            qa_repository.json
+            candidate_profile.json
+            $HOME/.local/share/LangHire/
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## LangHire Run Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Candidate:** Iyanuoluwa (Caleb) Adebiyi" >> $GITHUB_STEP_SUMMARY
+          echo "- **LLM Provider:** Google Gemini ($LLM_MODEL)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Run ID:** ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Date:** $(date -u)" >> $GITHUB_STEP_SUMMARY

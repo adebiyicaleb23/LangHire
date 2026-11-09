@@ -1,0 +1,84 @@
+{
+  "personal": {
+    "full_name": "Iyanuoluwa Adebiyi",
+    "preferred_name": "Caleb",
+    "email": "adebiyicaleb222@gmail.com",
+    "phone": "+2347050301256",
+    "city": "Abuja",
+    "province_state": "FCT",
+    "country": "Nigeria",
+    "postal_code": "900001",
+    "address": "",
+    "linkedin_url": "https://www.linkedin.com/in/iyanuoluwa-adebiyi-5a3a78431",
+    "github_url": "https://github.com/adebiyicaleb23",
+    "portfolio_url": "https://iyanu-portfolio-pi.vercel.app/",
+    "website_url": "https://adebiyicalebportfolio.vercel.app/",
+    "password": ""
+  },
+  "work_authorization": {
+    "legally_authorized_to_work": true,
+    "require_sponsorship": false,
+    "work_permit_type": "Authorized for Worldwide Remote / Contractor Roles"
+  },
+  "compensation": {
+    "salary_expectation": "80000",
+    "salary_currency": "USD",
+    "salary_range_min": "80000",
+    "salary_range_max": "120000"
+  },
+  "experience": {
+    "years_of_experience_total": "5",
+    "education_level": "Master's",
+    "current_title": "AI Data Evaluator & Domain Specialist",
+    "target_role": "Senior AI Trainer & Multi-Modal Evaluation Specialist"
+  },
+  "skills_boundary": {
+    "programming_languages": [
+      "Python"
+    ],
+    "frameworks": [
+      "Pandas",
+      "NumPy",
+      "PyTorch",
+      "Hugging Face Transformers"
+    ],
+    "tools": [
+      "Data Annotation",
+      "Model Evaluation",
+      "RLHF Alignment",
+      "Supervised Fine-Tuning (SFT)",
+      "Constitutional AI",
+      "Prompt Engineering",
+      "Preference Ranking",
+      "Hallucination Detection",
+      "Red-Teaming",
+      "Adversarial Prompting",
+      "LLM Benchmarking",
+      "Multimodal QA",
+      "Graphic Design",
+      "Video Editing & Motion Design",
+      "Figma",
+      "Adobe Creative Cloud",
+      "AWS",
+      "Microsoft Azure",
+      "Google Cloud",
+      "Vercel",
+      "Fiverr",
+      "Upwork"
+    ]
+  },
+  "resume_facts": {
+    "preserved_companies": [
+      "Mercor",
+      "Miva Open University",
+      "Fiverr",
+      "Upwork",
+      "OneForma",
+      "Turing"
+    ],
+    "preserved_school": "University of Suffolk, United Kingdom | University of Abuja, Nigeria"
+  },
+  "availability": {
+    "earliest_start_date": "Immediately"
+  }
+}
