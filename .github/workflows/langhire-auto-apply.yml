@@ -42,38 +42,8 @@ jobs:
 
       - name: Prepare Candidate Profile & Data Directory
         run: |
-          # Create OS data dir for Linux (XDG data home: ~/.local/share/LangHire)
-          DATA_DIR="$HOME/.local/share/LangHire"
-          mkdir -p "$DATA_DIR"
           mkdir -p logs resumes
-
-          # Copy candidate profile, settings, and resume to both root and data dir
-          cp candidate_profile.json "$DATA_DIR/candidate_profile.json"
-          cp settings.json "$DATA_DIR/settings.json"
-          cp resume.txt "$DATA_DIR/resume.txt" 2>/dev/null || true
-
-          # If email secret provided, ensure it matches in profile and settings
-          if [ -n "$MY_EMAIL" ]; then
-            python -c "
-            import json, os
-            email = os.environ['MY_EMAIL']
-            for path in ['$DATA_DIR/candidate_profile.json', 'candidate_profile.json']:
-                if os.path.exists(path):
-                    with open(path, 'r') as f:
-                        d = json.load(f)
-                    d['email'] = email
-                    with open(path, 'w') as f:
-                        json.dump(d, f, indent=2)
-            for path in ['$DATA_DIR/settings.json', 'settings.json']:
-                if os.path.exists(path):
-                    with open(path, 'r') as f:
-                        d = json.load(f)
-                    d['sensitive_data']['email'] = email
-                    with open(path, 'w') as f:
-                        json.dump(d, f, indent=2)
-            "
-          fi
-          echo "Candidate profile & settings ready."
+          python scripts/prepare_candidate.py
 
       - name: Run Job Collection & Auto-Applier
         run: |
@@ -81,7 +51,7 @@ jobs:
           echo "Starting LangHire Auto-Applier with Gemini AI..."
           echo "=================================================="
 
-          # Collect jobs across priority titles (AI Trainer, AI Data Evaluator, RLHF, VA)
+          # Collect jobs across priority titles (AI Trainer, AI Data Evaluator, RLHF)
           python cli/collect_jobs.py --title "AI Trainer" || true
           python cli/collect_jobs.py --title "AI Data Evaluator" || true
 
@@ -99,7 +69,7 @@ jobs:
             jobs.json
             qa_repository.json
             candidate_profile.json
-            $HOME/.local/share/LangHire/
+            ~/.local/share/LangHire/
           if-no-files-found: ignore
           retention-days: 30
 
