@@ -69,7 +69,9 @@ jobs:
             jobs.json
             qa_repository.json
             candidate_profile.json
-            ~/.local/share/LangHire/
+            settings.json
+            llm_settings.json
+            ~/.config/langhire/
           if-no-files-found: ignore
           retention-days: 30
 

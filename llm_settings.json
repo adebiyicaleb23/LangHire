@@ -1,0 +1,15 @@
+{
+  "provider": "gemini",
+  "gemini": {
+    "api_key": "",
+    "model": "gemini-2.0-flash"
+  },
+  "openai": {
+    "api_key": "",
+    "model": "gpt-4o"
+  },
+  "anthropic": {
+    "api_key": "",
+    "model": "claude-sonnet-4-5"
+  }
+}

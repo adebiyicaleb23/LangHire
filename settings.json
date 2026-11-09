@@ -1,10 +1,15 @@
 {
+  "resume_path": "C:\\Users\\USER\\Desktop\\LangHire\\resume.txt",
+  "blocked_domains": [
+    "meeboss.com"
+  ],
   "sensitive_data": {
     "email": "adebiyicaleb222@gmail.com",
     "password": ""
   },
-  "resume_path": "resume.txt",
-  "blocked_domains": [
-    "meeboss.com"
-  ]
+  "max_failures": 8,
+  "stagger_delay": 5,
+  "data_dir": "C:\\Users\\USER\\AppData\\Roaming\\langhire",
+  "telemetry_enabled": false,
+  "theme": "system"
 }

@@ -52,7 +52,8 @@ async def collect_for_title(title: str, existing_jobs: dict, profile: dict, max_
     import json as _json, re as _re
     from datetime import datetime, timezone
 
-    locations = ", ".join(profile["target_locations"])
+    loc_list = profile.get("target_locations") or ["Remote"]
+    locations = ", ".join(loc_list)
 
     known_urls = [
         url for url, j in existing_jobs.items()
