@@ -21,7 +21,7 @@ jobs:
       GEMINI_API_ACCESS: ${{ secrets.GEMINI_API_ACCESS }}
       GEMINI_API_NAME: ${{ secrets.GEMINI_API_NAME }}
       MY_EMAIL: ${{ secrets.MY_EMAIL }}
-      LLM_MODEL: gemini-2.5-flash
+      LLM_MODEL: gemini-3.8-flash
       PYTHONUNBUFFERED: "1"
 
     steps:
