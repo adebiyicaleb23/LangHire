@@ -57,7 +57,7 @@ print(f"Saved settings.json to {data_dir} and root.")
 
 # 3. LLM Settings (Gemini)
 gemini_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GEMINI_API_ACCESS") or os.environ.get("GEMINI_API_NAME") or ""
-model = os.environ.get("LLM_MODEL", "gemini-2.0-flash")
+model = os.environ.get("LLM_MODEL", "gemini-2.5-flash")
 
 llm_settings = {
     "provider": "gemini",

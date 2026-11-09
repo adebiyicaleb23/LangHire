@@ -182,7 +182,7 @@ def get_llm():
         if "gemini" not in settings:
             settings["gemini"] = {}
         settings["gemini"]["api_key"] = gemini_key.strip()
-        settings["gemini"]["model"] = os.environ.get("LLM_MODEL", "gemini-2.0-flash")
+        settings["gemini"]["model"] = os.environ.get("LLM_MODEL", "gemini-2.5-flash")
 
     return create_llm(settings)
 
